@@ -133,7 +133,7 @@ export default {
       return { average: sum / length }
     },
     dice_image: function () {
-      return '/img/d' + this.num_sides + '.svg'
+      return require('../assets/img/d' + this.num_sides + '.svg')
     }
   }
 }

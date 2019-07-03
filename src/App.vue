@@ -15,7 +15,7 @@
 
 body {
   background-color: #ffffff;
-  background-image: url("/img/pattern.svg");
+  background-image: url("./assets/img/pattern.svg");
 }
 
 #app {

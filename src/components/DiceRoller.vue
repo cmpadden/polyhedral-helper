@@ -56,10 +56,19 @@
     <div v-if="roll_result.length">
       <hr />
       <!-- TODO: implement stats -->
-      <!-- <div> -->
-      <!-- Average: {{ stats.average }} -->
-      <!-- </div> -->
-      <b-table responsive hover :items="roll_result"></b-table>
+      <!-- <div>Average: {{ stats.average }} </div> -->
+      <b-table responsive hover :items="roll_result">
+
+        <template slot="roll_components" slot-scope="row">
+          <b-card>
+            <b-row class="mb-1" v-for="(value, key) in row.value" :key="key">
+              <b-col class="text-sm-right"><b>Roll #{{ value.iter }}:</b></b-col>
+              <b-col v-bind:class="{ 'text-success': value.max }">{{ value.base_roll }}</b-col>
+            </b-row>
+          </b-card>
+        </template>
+
+      </b-table>
     </div>
 
 </b-container>
@@ -99,26 +108,37 @@ export default {
   },
   methods: {
     roll: function (event) {
-      for (var i = 0; i < this.num_dice; i++) {
-        var base_value = Math.floor((Math.random() * this.num_sides) + 1)
-        var mod_value = 0
-        var roll_time = new Date()
-        if (this.mod_type === '+') {
-          mod_value = base_value + (this.mod_amount * 1)
-        } else {
-          mod_value = base_value - (this.mod_amount * 1)
-        }
 
-        // `unshift` to prepend value to array
-        this.roll_result.unshift({
-          total_roll: mod_value,
-          base_roll: base_value,
-          sides: this.num_sides,
-          modifier: this.mod_amount,
-          timestamp: roll_time.toLocaleTimeString(),
-          _rowVariant:  base_value === this.num_sides ? 'warning' : null
+      // Make previous rolls secondary
+      for (var i = 0; i < this.roll_result.length; i++) {
+        this.roll_result[i]._rowVariant = 'secondary'
+      }
+
+      // Sum rolls and keep track of individual rolls in `roll_components`
+      var roll_total = 0
+      var roll_components = []
+      for (var d = 0; d < this.num_dice; d++) {
+        var roll = Math.floor((Math.random() * this.num_sides) + 1)
+        roll_total += roll
+        roll_components.push({
+          iter: d + 1,
+          base_roll: roll,
+          max: this.num_sides === roll
         })
       }
+
+      // Add modifier to summed base roll
+      roll_total += this.mod_amount
+      var roll_max = (this.num_sides * this.num_dice) + this.mod_amount
+
+      // `unshift` to prepend value to array
+      this.roll_result.unshift({
+        result: roll_total,
+        roll_notation: '(' + this.num_dice + 'd' + this.num_sides + ')+' + this.mod_amount,
+        roll_components: roll_components,
+        _rowVariant:  roll_total === roll_max ? 'warning' : null
+      })
+
     },
     clear: function (event) {
       this.roll_result = []
@@ -142,8 +162,9 @@ export default {
 
 <style scoped lang="scss">
 
-.btn-roll {
-  width: 20rem;
+button {
+  /* Disable double-tap to zoom */
+  touch-action: manipulation;
 }
 
 </style>

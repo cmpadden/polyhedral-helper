@@ -1,11 +1,17 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <h1>Rollin'</h1>
-    </div>
-    <div class="view-container">
-      <router-view/>
-    </div>
+    <b-row>
+      <b-col/>
+      <b-col sm="10">
+        <div id="nav">
+          <h1>Rollin'</h1>
+        </div>
+        <div class="view-container">
+          <router-view/>
+        </div>
+      </b-col>
+      <b-col/>
+    </b-row>
   </div>
 </template>
 
@@ -24,8 +30,6 @@ body {
   -moz-osx-font-smoothing: grayscale;
   /* text-align: center; */
   color: #2c3e50;
-  margin-left: 5em;
-  margin-right: 5em;
 }
 
 #nav {
@@ -53,5 +57,4 @@ body {
   border-width: 1px;
 
 }
-
 </style>

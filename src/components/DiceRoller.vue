@@ -3,10 +3,10 @@
   <b-container fluid>
 
     <b-row>
-      <b-col>
-        <b-img center v-bind:src="dice_image" fluid alt="Dice"></b-img>
+      <b-col sm="12" md="2" class="text-center align-self-center" >
+          <b-img v-bind:src="dice_image" fluid alt="Die"></b-img>
       </b-col>
-      <b-col cols="10">
+      <b-col sm="12" md="10">
         <b-row>
           <div class="input-group mb-3">
             <div class="input-group-prepend">
@@ -45,11 +45,11 @@
     </b-row>
 
     <b-row>
-      <b-col lg="1" class="pl-0">
-        <b-button v-on:click="roll" variant="outline-primary">Roll</b-button>
+      <b-col xs="6" class="text-center">
+        <b-button block v-on:click="roll" variant="outline-primary">Roll</b-button>
       </b-col>
-      <b-col lg="1" class="pl-0">
-        <b-button v-on:click="clear" variant="outline-danger">Clear</b-button>
+      <b-col xs="6" class="text-center">
+        <b-button block v-on:click="clear" variant="outline-danger">Clear</b-button>
       </b-col>
     </b-row>
 
@@ -59,7 +59,7 @@
       <!-- <div> -->
       <!-- Average: {{ stats.average }} -->
       <!-- </div> -->
-      <b-table hover :items="roll_result"></b-table>
+      <b-table responsive hover :items="roll_result"></b-table>
     </div>
 
 </b-container>
@@ -111,11 +111,12 @@ export default {
 
         // `unshift` to prepend value to array
         this.roll_result.unshift({
-          roll: mod_value,
+          total_roll: mod_value,
           base_roll: base_value,
+          sides: this.num_sides,
           modifier: this.mod_amount,
           timestamp: roll_time.toLocaleTimeString(),
-          _cellVariants:  base_value === this.num_sides ? { value: 'warning' } : {}
+          _rowVariant:  base_value === this.num_sides ? 'warning' : null
         })
       }
     },

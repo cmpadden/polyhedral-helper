@@ -103,7 +103,7 @@ export default {
       mod_type: this.initial_mod_type,
       mod_amount: this.initial_mod_amount,
       roll_result: [],
-      available_dice: [ 20, 12, 10, 8, 6, 4 ]
+      available_dice: [20, 12, 10, 8, 6, 4]
     }
   },
   methods: {

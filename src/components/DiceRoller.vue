@@ -108,7 +108,6 @@ export default {
   },
   methods: {
     roll: function (event) {
-
       // Make previous rolls secondary
       for (var i = 0; i < this.roll_result.length; i++) {
         this.roll_result[i]._rowVariant = 'secondary'
@@ -136,9 +135,8 @@ export default {
         result: roll_total,
         roll_notation: '(' + this.num_dice + 'd' + this.num_sides + ')+' + this.mod_amount,
         roll_components: roll_components,
-        _rowVariant:  roll_total === roll_max ? 'warning' : null
+        _rowVariant: roll_total === roll_max ? 'warning' : null
       })
-
     },
     clear: function (event) {
       this.roll_result = []
